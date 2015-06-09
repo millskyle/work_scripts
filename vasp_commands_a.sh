@@ -31,3 +31,43 @@ function recursivecheck () {
 
 }
 
+
+function remoteposcar()
+{
+   thisdir="$PWD"
+   if [[ "x$1" == "x" ]] || [[ "x$2" == "x" ]] ; then
+      echo -e "Two arguments required:\
+                     remoteposcar hostname directory-containing-vasprun \
+            \n\n\t e.g.: remotevasprun orcinus /home/kmills/alcomp/Naphthalene/6-6/TUBE_iso\
+            \n"
+   else
+      if [[ "x$3" == "xCONTCAR" ]]; then
+         ffile=CONTCAR
+      else
+         ffile=POSCAR
+      fi
+      cd /tmp
+      scp -r $1:$2/$ffile /tmp/POSCAR
+      vmdPOSCAR /tmp/POSCAR 
+   fi
+   cd $thisdir
+}
+
+
+function remotevasprun()
+{
+   if [[ "x$1" == "x" ]] || [[ "x$2" == "x" ]] ; then
+      echo -e "Two arguments required:\
+                     remotevasprun hostname directory-containing-vasprun \
+            \n\n\t e.g.: remotevasprun orcinus /home/kmills/alcomp/Naphthalene/6-6/TUBE_iso\
+            \n"
+   else
+      scp -r $1:$2/vasprun.xml /tmp
+      vmd /tmp/vasprun.xml > /dev/null 
+   fi
+}
+
+
+
+
+

@@ -5,3 +5,7 @@ I source sourceAll.sh from my .bashrc file on my computers which in turn sources
 
 > source sourceAll.sh
 
+
+If I want to disable a script (but not delete it) I rename it, removing the _a in the filename.
+
+

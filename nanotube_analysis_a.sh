@@ -42,3 +42,18 @@ bc -l <<< "$(echo 0."$(awk 'NR>8 { printf("%03.7f\n",$3) }' CONTCAR | sed 's|0\.
 
 
 
+
+function LOCPOTplot() {
+
+if [[ -a "LOCPOT" ]]; then
+   if [[ ! -a "LOCPOTx" ]] || [[ ! -a "LOCPOTy" ]] || [[ ! -a "LOCPOTz" ]] ; then
+      echo "Averaging LOCPOT over planes"
+      vasputil_locpotaverage LOCPOT
+   fi
+      echo "plot 'LOCPOTx' w l, 'LOCPOTy' w l, 'LOCPOTz' w l" > /tmp/kmills.tmp.plot.gnu
+      gnuplot -persist /tmp/kmills.tmp.plot.gnu
+else
+   echo "LOCPOT file doesn't exist!"
+fi
+}
+

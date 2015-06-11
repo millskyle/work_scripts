@@ -30,3 +30,15 @@ END {print 2*rsum/rcount }
 
 }
 
+
+
+
+function NTlength() {
+
+bc -l <<< "$(echo 0."$(awk 'NR>8 { printf("%03.7f\n",$3) }' CONTCAR | sed 's|0\.||g'  | sort | tail -n 1)" ) * $(awk 'NR==5 {print $3}' CONTCAR )  "
+
+}
+
+
+
+

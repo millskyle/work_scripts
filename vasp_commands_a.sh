@@ -20,7 +20,8 @@ function recursivecheck () {
                  echo $i
                  echo -ne "\t"
                  if [[ $( grep accuracy OUTCAR 2>/dev/null ) ]]; then 
-                    echo "$(tput setaf 2; tput bold)Accuracy reached$(tput sgr0) " 
+                    echo -n "$(tput setaf 2; tput bold)Accuracy reached$(tput sgr0) " 
+                    echo "                   TOTEN= "$(grep TOTEN OUTCAR | grep -o '[0-9\.\-]*' | tail -n 1)
                  else
                     echo $(tput setaf 1)$(grep pressure OUTCAR 2>/dev/null | wc -l )" steps completed.  Sufficient accuracy not reached.$(tput sgr0) "
                  fi
@@ -63,11 +64,11 @@ function remotevasprun()
             \n"
    else
       scp -r $1:$2/vasprun.xml /tmp
-      vmd /tmp/vasprun.xml > /dev/null 
+      vmd /tmp/vasprun.xml 
    fi
 }
 
-
+alias bgqvr='remotevasprun bgq '
 
 
 

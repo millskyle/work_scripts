@@ -1,5 +1,10 @@
 #!/bin/bash
 
+function vaspruntime () { 
+   
+   echo $(( ( $(date -ud "$(head -n 1 time.dat)" +'%s') - $(date -ud "$(tail -1 time.dat)" +'%s') ) ))
+   
+     } 
 
 function HOMOLUMO() {
 

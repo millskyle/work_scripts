@@ -6,7 +6,7 @@ rsync -av --exclude=WAVECAR --exclude=CHG* --exclude=LOCPOT $1/ $2
 
 
 function check() {
-[[ $( grep accuracy OUTCAR 2>/dev/null ) ]] && echo "$(tput setaf 2; tput bold)Accuracy reached$(tput sgr0) " || echo $(tput setaf 1)$(grep pressure OUTCAR 2>/dev/null | wc -l ) steps completed.  Sufficient accuracy not reached.$(tput sgr0)
+[[ $( grep accuracy OUTCAR 2>/dev/null ) ]] && echo "$(tput setaf 2; tput bold)Accuracy reached$(tput sgr0) " && return 0 || echo $(tput setaf 1)$(grep pressure OUTCAR 2>/dev/null | wc -l ) steps completed.  Sufficient accuracy not reached.$(tput sgr0) && return 1
 
 }
 

@@ -14,6 +14,16 @@ pcregrep -M '2\.00000.*(\n)*.*2\.00000.*(\n)*.*0\.00000.*(\n)*.*0\.00000' OUTCAR
 
 
 
+function electron_affinity() {
+   vasputil_locpotaverage LOCPOT x &&
+   echo "E_vac: "$( (head -n 5 LOCPOTx && tail -n 5 LOCPOTx && head -n 5 LOCPOTy && tail -n 5 LOCPOTy )  | awk '{sum+=$2} END {print sum/20.0}' )
+   echo "HOMOLUMO:"
+   HOMOLUMO
+
+
+
+}
+
 
 function energy_per_atom() {
         atoms=$(awk 'NR==7 {for(i=1;i<=NF;i++) t+=$i; print t; t=0}' POSCAR)

@@ -15,8 +15,14 @@ f.seek(0) #rewind
 junk = [f.readline() for _ in range(header_size-1)] #Read the header to get past it.  Don't do anything with it 
 nx,ny,nz=[int(i) for i in f.readline().split() ] #Read the dimensions of the file 
 
+print "File size: ",nx,"x",ny,"x",nz," voxels"
+
 f.seek(0) #Rewind to the beginning again 
 l = []
+#f.close()
+#l = np.loadtxt(readFile, skiprows=header_size)
+
+
 for i,line in enumerate(f):
    if "augmentation" in line: break
    if i >= header_size:             #Only process the data if it's not part of the header
@@ -35,17 +41,35 @@ outy = open("LOCPOTy","w")
 outz = open("LOCPOTz","w")
 
 
+datx = []
+daty = []
+datz = []
+
+
+
 if (index==0 or index=='x' or True):
    for x in xrange(nx):
       outx.write(str(x) + "   " + str(np.mean(data2[:,:,x])) + "\n")
+      datx.append(np.mean(data2[:,:,x]))
 
 if (index==1 or index=='y' or True):
    for y in xrange(ny):
       outy.write(str(y) + "   " + str(np.mean(data2[:,y,:])) + "\n")
+      daty.append(np.mean(data2[:,y,:]))
 
 if (index==2 or index=='z' or True):
    for z in xrange(nz):
       outz.write(str(z) + "   " + str(np.mean(data2[z,:,:])) + "\n")
+      datz.append(np.mean(data2[z,:,:]))
+
+
+
+print "x_max =",np.mean(sorted(datx)[-15:])
+print "y_max =",np.mean(sorted(daty)[-15:])
+print "z_max =",np.mean(sorted(datz)[-15:])
+
+
+
 
 
 

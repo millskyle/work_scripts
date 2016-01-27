@@ -27,6 +27,7 @@ if [[ "x$(   hostname | grep -o '[a-zA-Z]*-' )" == "xbgqdev-" ]]; then
    if [[ ! "x$1" == "x" ]]; then
       if [[ -a "$1" ]]; then
          sed "s|!!!basename!!!|$(basename $PWD)|g" $1 > "${1}.tmp"
+         sed -i "s|!!!basename..!!!|$(basename $(sed "s|$( basename $PWD )||" <<< $PWD ))|g" "${1}.tmp"
          llsubmit "${1}.tmp"
          rm "${1}.tmp" 2>/dev/null
       else
@@ -56,6 +57,11 @@ fi
 
 }
 
+
+
+function column() {
+  awk '{print $'$1'}'
+}
 
 
 

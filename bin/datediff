@@ -10,10 +10,16 @@ import argparse
 
 argp = argparse.ArgumentParser(description="Compute the time differences between free-form dates. Provide through stdin a list of free-form dates, one per line.  If stdin contains N dates, N-1 date differences will be printed.")
 
+argp.add_argument("-s", '--seconds', action="store_true", help='print the output in seconds')
+
 args = argp.parse_args()
 
 
 dates = [parser.parse(i.strip()) for i in sys.stdin.readlines()]
 
 for i, d in enumerate(dates[0:-1]):
-    print dates[i+1] - dates[i]
+    delta = dates[i+1] - dates[i]
+    if not args.seconds:
+        print delta
+    else:
+        print delta.total_seconds()
